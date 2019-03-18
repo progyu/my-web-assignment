@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>우편 번호 검색기 실습</title>
+</head>
+<style>
+    a {
+        color: white;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+<body>
+    <!--
+        회원가입창 만들기
+        1.아이디
+        2.비밀번호
+        3.이름
+        4.주소 - 우편번호(postcode), 주소(address), 주소 디테일, 우편번호 찾기
+        5.회원가입 확인 버튼 - submit 이벤트 발생
+
+        * 회원 가입 확인 버튼을 눌렀을 때 
+           모든 결과를 하나로 합쳐서 alert창에 띄워주세요.
+    -->
+
+    <!--
+        form tag
+            input, select, textarea
+            input - type => text, email, phone, date, password, hidden
+
+    -->
+
+    <form action="#" method="POST" id="join_form">
+        <div class="form-row col-md-12">
+            <div class="form-group col-md-4">
+                <label for="inputEmail4">Id</label>
+                <input type="text" class="form-control" id="id" placeholder="Id" name="id">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputPassword4">Password</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Password" name="pwd">
+            </div>
+        </div>
+
+        <div class="form-row col-md-12">
+            <div class="form-group col-md-4">
+                <label for="inputEmail4">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputEmail4">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+            </div>
+        </div>
+
+        <div class="form-group col-md-8">
+            <label for="inputAddress">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="1234 Main St" name="address">
+        </div>
+        <div class="form-group col-md-8">
+            <label for="inputAddress2">Address 2</label>
+            <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor"
+                name="address2">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="postnum" name="postnum">
+        </div>
+        </div>
+        <div class="form-group col-md-8">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+    </form>
+    <div class="form-group col-md-8">
+        <button class="btn btn-primary" id="zipcode_search">우편번호 찾기</button>
+    </div>
+
+
+    <script>
+
+        $(function () {
+            //다음 주소 api 사용
+            $('#zipcode_search').click(function () {
+                new daum.Postcode({
+                    oncomplete: function (data) {
+                        console.log(data);
+                        console.log(data.address);
+                        console.log(data.postcode);
+                        $('#address').val(data.address);
+                        $('#postnum').val(data.postcode);
+                    }
+                }).open();
+            });
+
+            // id 유효성 검사   
+            $(document).on('blur', '#id', function () {
+                var idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
+                if (idReg.test($("input[name=id]").val()) == false && $("input[name=id]").val() != '') {
+                    //$(this).focus();
+                    $("input[name=id]").val('');
+                    alert("아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.");
+                    //$('#vpwd').html('아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.');
+                    $('#id').addClass('is-invalid');
+                } else {
+                    $('#id').addClass('is-valid');
+                    $('#id').removeClass('is-invalid');
+                }
+                return false;
+            });
+
+
+
+            // password 유효성 검사
+            $('#pwd').blur(function () {
+                var pwdReg = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+                if (pwdReg.test($("input[name=pwd").val()) == false && $("input[name=pwd").val() != '') {
+                    $("input[name=pwd]").val('');
+                    alert('비밀번호는 특수문자 / 문자 / 숫자 포함 형태의 8~15자리이어야 합니다.');
+                    //$(this).focus();
+                    $('#pwd').addClass('is-invalid');
+                } else {
+                    $('#pwd').addClass('is-valid');
+                    $('#pwd').removeClass('is-invalid');
+                }
+                return false;
+            });
+
+            //email 유효성 검사
+            $('#email').blur(function () {
+                var emailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+                if (emailReg.test($("input[name=email]").val()) == false && $("input[name=email").val() != '') {
+                    $("input[name=email]").val('');
+                    alert('올바른 형식의 이메일을 입력하여 주세요.');
+                    //$(this).focus();
+                    $('#email').addClass('is-invalid');
+                } else {
+                    $('#email').addClass('is-valid');
+                    $('#email').removeClass('is-invalid');
+                }
+                return false;
+            })
+
+
+            //미입력사항 유효성 검사
+            $('#join_form').submit(function (e) {
+                if ($('#id').val() == '') {
+                    alert('아이디를 입력하세요.');
+                    return false;
+                } else if ($('#pwd').val() == '') {
+                    alert('비밀번호를 입력하세요.');
+                    return false;
+                } else if ($('#name').val() == '') {
+                    alert('이름을 입력하세요.');
+                    return false;
+                } else if ($('#address').val() == '') {
+                    alert('주소를 입력하세요.');
+                    return false;
+                } else if ($('#postnum').val() == '') {
+                    alert('우편번호를 입력하세요');
+                    return false;
+                } else if ($('#address2').val() == '') {
+                    alert('상세주소를 입력하세요.');
+                    return false;
+                } else {
+                    alert('아이디 :' + $('#id').val() + '   ' + '패스워드 :' + $('#pwd').val() + '   '
+                        + '이름 :' + $('#name').val() + '   ' + '도로명 주소 :' + $('#address').val()
+                        + '   ' + '우편 번호 :' + $('#postnum').val() + '   ' + '상세 주소 :' + $('#address2').val()
+                    );
+                    return false;
+                }
+            })
+        });
+
+    </script>
+</body>
+
+</html>
