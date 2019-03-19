@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 
+    추가할 기능!!
+    (완료) 리스트 전부 삭제 버튼 만들기
+    (완료?) 추가할 수 있는 리스트 개수 제한 -- 이미지 크기로 자동으로 한정되어 있는듯 12개까지 가능
+    (거의 완료)더블 클릭하면 수정할 수 있는 기능
+    -> 문제사항 : 리스트 수정 이후에 휴지통 아이콘으로 삭제해도 All done 버튼이 그대로 남아있음.
+       문제원인 : 수정 되기 전에 리스트의 길이가 그대로 남아있어서 길이로 조건을 주는 것이 통하지 않음.
+    푸쉬 메세지 보내기(ex)일정시간에 할 일이 많이 남아있다는 푸쉬 메세지
+    푸쉬 알람 켜기/끄기 설정
+    (거의 완료) local storage 기능!  입력, 삭제는 저장함, 수정은 아직 미완성.
+    
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <style>
+        .square {
+            background-image: url('images/time.jpg');
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 1000px;
+            /* text-align: center; */
+        }
+
+        .wrapper {
+            margin-left: 34%;
+        }
+
+        .to_do_list {
+            display: inline-block;
+            font-size: 32px;
+            font-weight: 600;
+            margin-left: 38%;
+        }
+
+        body {
+            margin: 0 auto;
+            color: white;
+        }
+
+        p {
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        .sub {
+            display: block;
+            text-align: end;
+            margin-left: 62px;
+        }
+
+        .main_icon {
+            display: inline-block;
+            font-size: 60px;
+            /* margin-top: 10px; */
+            position: absolute;
+            top: 80px;
+            right: 329px;
+        }
+
+        .top_txt {
+            padding-top: 100px;
+        }
+
+        .mdl-button--fab.mdl-button--colored {
+            background-color: cadetblue;
+        }
+
+        .welcome {
+            font-size: 60px;
+            font-weight: 700;
+        }
+
+        .tictok {
+            text-align: left;
+            padding-left: 100px;
+            line-height: 100px;
+            font-size: 50px;
+            font-weight: 700;
+        }
+
+        #tik {
+            font-size: 16px;
+        }
+        
+        #all_clear {
+            display: none;
+            position:absolute;
+            top:10px;
+            right:10px;
+            font-size: 2rem;
+        }
+
+        .edit_ul {
+            font-size: 32px;
+            font-weight: 600;
+            list-style: none;
+            padding: 0;
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+    <div class="square" id="div1">
+        <div class="wrapper">
+            <div class="top_txt">
+                <p class="welcome">Welcome!, bro!</p>
+                <div id="clock"></div>
+                <i class="material-icons md-dark main_icon">hourglass_empty</i>
+            </div>
+           
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label sub">
+                <input id="input_todo" class="mdl-textfield__input" type="text" name="todo" autocomplete="off">
+                <label class="mdl-textfield__label">TODO!</label>
+                <button id="go"
+                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored sub_go">
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>
+        <button id="all_clear">All done!</button>
+    </div>
+
+
+    <script>
+        //로컬스토리로 저장 하고 로드하는 함수 설정-------------------------------------------
+        /*
+            함수 : 명령어
+            function
+
+            메서드 메소드
+            method
+            
+            단독으로 실행되는 경우 -> 함수
+            saveTodo();
+
+            클래스나 인스턴스의 내부 함수를 호출하는 경우
+
+
+            내가 자주 사용하는 코드 블록을 원하는 만큼의 단위로 쪼개서 명령어처럼 만들어 두는 것.
+
+            함수의 정의
+
+            function 함수이름() {
+                [내가 실행할 코드 블록]
+                [내가 실행할 코드 블록]
+                [내가 실행할 코드 블록]
+                [내가 실행할 코드 블록]
+            }
+
+
+            함수이름();
+        */
+
+
+         //숫자로 표현되는 달을 문자열 달로 표현-----------------------------------------------
+         var month = ["January", "February", "March", "April", "May", "June", "July", "August",
+            "September", "October", "November", "December"];
+        var currentD = new Date();
+        var d = currentD.getMonth();
+        var currentDt = currentD.getDate();
+        var dd = month[d] + '-' + currentDt;
+
+          //리얼타임을 화면에 표시---------------------------------------------------------------------
+          function updateClock() {
+            var currentTime = new Date();
+            var currentHours = currentTime.getHours();
+            var currentMinutes = currentTime.getMinutes();
+            var currentSeconds = currentTime.getSeconds();
+
+            //시계 표기 방법에 대한 여러 환경설정------------------------------------------------------   
+            // Pad the minutes and seconds with leading zeros, if required
+            currentMinutes = (currentMinutes < 10 ? "0" : "") + currentMinutes;
+            currentSeconds = (currentSeconds < 10 ? "0" : "") + currentSeconds;
+
+            // Choose either "AM" or "PM" as appropriate
+            var timeOfDay = (currentHours < 12) ? "AM" : "PM";
+
+            // Convert the hours component to 12-hour format if needed
+            currentHours = (currentHours > 12) ? currentHours - 12 : currentHours;
+
+            // Convert an hours component of "0" to "12"
+            currentHours = (currentHours == 0) ? 12 : currentHours;
+
+            // Compose the string for display
+            var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
+
+
+            $("#clock").html('<p class="tictok">' + currentTimeString + '</p>');
+            //$('#clock').append('<span>'+currentTimeString+'</span>');
+            //$('#clock').remove();
+
+        }
+        //1초마다 시간을 화면에 표기
+        $(document).ready(function () {
+            setInterval('updateClock()', 1000);
+        });
+
+        var list_item = '<ul><li class="to_do_list"><span class="mdl-list__item-primary-content"><i id="list_del" class="material-icons md-dark icon">delete_forever</i></span>' +
+                        '<span id="tik">' + dd + '</span>' + '</li></ul>';
+
+        var edit_item = '<ul class="edit_ul"><li class="edit_list"><i id="list_del" class="material-icons md-dark icon">delete_forever</i>' +
+                        '<span id="tik">' + dd + '</span>' + '</li></ul>'
+
+        var edit_input = '<input id="input_todo" class="mdl-textfield__input" type="text" name="todo" autocomplete="off">'+
+        '<button id = "go" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored sub_go">'+
+        '<i class = "material-icons">add</i>'+'</button>'
+      
+
+
+        storage_key = "mytodos";
+        function saveTodo () {
+            var data = {};
+            var todos = $('.square li .mdl-list__item-primary-content');
+            todos.each(function(index) {
+                data[index] = [$(this).attr('data-value'), $(this).hasClass("complete")];
+            });
+            //console.log(data);
+            localStorage.setItem(storage_key, JSON.stringify(data));
+        }
+
+        function loadTodo () {
+            var todos = localStorage.getItem(storage_key);
+            todos = JSON.parse(todos);
+            for(var key in todos) {
+                var value = todos[key][0];
+                var complete = todos[key][1];
+                sample_item = $(list_item).clone();
+                //componentHandler.upgradeElement(sample_item.get(0));
+                sample_item.find('.mdl-list__item-primary-content').append(value);
+                sample_item.find('.mdl-list__item-primary-content').attr("data-value",value);
+                if(complete) {
+                    sample_item.find('.mdl-list__item-primary-content').addClass('complete')
+                }
+                $('.square').append(sample_item);
+            }
+            componentHandler.upgradeDom();
+        }
+
+      
+       
+ 
+
+
+
+    $(document).ready(function () {
+        loadTodo();
+        //플러스 버튼을 클릭했을 때 이벤트------------------------------------------------------
+       // $(document).ready(function () {
+            $('.sub_go').click(function (e) {
+                e.preventDefault();
+        //입력한 내용이 없으면 경고창을 띄움------------------------------------------------------
+                if ($('input[name="todo"]').val() == '') {
+                    alert('내용을 입력해 주세요.');
+                    //return false;
+        //입력한 내용이 있으면 list를 추가하고 입력된 값을 초기화----------------------------------
+                } else {
+                    add_todo_value = $('input[name="todo"]').val();
+                    console.log(add_todo_value);
+                    sample_item = $(list_item).clone();
+                    console.log(sample_item);
+                    //componentHandler.upgradeElement(sample_item.get(0));
+                    sample_item.find('.mdl-list__item-primary-content').append(add_todo_value);
+                    sample_item.find('.mdl-list__item-primary-content').attr("data-value",add_todo_value);
+                    $('.square').append(sample_item);
+                    saveTodo();
+                    $('input[name="todo"]').val('');
+                }
+            });
+      //  });
+
+        //휴지통 이모티콘을 클릭하면 this가 가리키는 i태그의 부모의 부모인 li태그를 삭제----------------------
+        $(document).on("click", '#list_del', function (e) {
+            e.preventDefault();
+            $(this).parent().parent().remove();
+            //console.log('to do :' + $('.to_do_list').length +'edit :' + $('.edit_list').length);
+            // console.log($('li').length);
+            //리스트가 없을 시 버튼 숨김----------------------------------------------------------------
+            //수정 시 $('.to_do_list').length의 길이가 그대로 남음 - > why? remove를 한게 아니라
+            //.hmtl()을 이용해 수정을 해준 것뿐이기 때문에 그대로 남음
+            if($('.to_do_list').length == 0 && $('.edit_list').length == 0)
+            {
+                $('#all_clear').css('display','none');
+            }
+            saveTodo();
+        })
+
+
+      
+
+        //엔터키 설정
+        $("#input_todo").keypress(function (e) {
+            if (e.which == 13) {
+                $("#go").click();
+            }
+        });
+
+        //모두완료 버튼 화면에 표시
+        //$(document).ready(function () {
+            $(document).on("click", ".sub_go" ,function(e){
+            if($('.to_do_list').length >= 1)
+            {
+                $('#all_clear').css('display','inline-block');
+            } else {
+                $('#all_clear').css('display','none');
+            }
+            });
+        //});
+
+        //모두완료 클릭 했을 시 리스트 전체 삭제 이벤트
+        $(document).on('click','#all_clear',function(e){
+            $('.to_do_list').remove();
+            //리스트가 없을 시 버튼 숨김----------------------------------------------------------------
+            if($('.to_do_list').length == 0)
+            {
+                $('#all_clear').css('display','none');
+            }
+            saveTodo();
+        })
+
+
+
+
+
+
+// 수정하기---------------------------------------------------------------------------------------------
+/*
+
+        //더블 클릭 했을 시 to-do-list 수정창 띄우기
+        $(document).on('dblclick', '.to_do_list', function(e){
+            e.preventDefault();
+            //원래 있던 내용을 없애고 다른 내용을 바꿀 때는 .html()
+            //있던 내용의 또 다른 내용을 덧붙일 때는 .prepend() or .append()
+            //edit 버튼 클릭 시 수정하기에서 부모로 잡아 .html()을 사용하기 위해 부모로 div태그를 넣음.
+            // $(this).html('<div class="edit_group"><input type="text" placeholder="수정해주세요" class="edit" name="edit_val">'+
+            // '<input type="submit" value="edit" class="todo_edit"></div>');
+            //자동으로 커서 이동시키기
+            $(this).html(edit_input);
+            //$('.edit').focus();
+            
+        })
+
+        //edit 버튼 클릭 시 수정하기
+        $(document).on('click', '.todo_edit', function(e){
+            e.preventDefault();
+            //console.log($('input[name="edit_val"]').val());
+            add_edit_value = $('input[name="edit_val"]').val();
+            edit_item = $(edit_item).clone();
+            // $(this).parent().html( '<ul class="edit_ul"><li class="edit_list">' + $('input[name="edit_val"]').val()
+            //             + '<i id="list_del" class="material-icons md-dark icon">delete_forever</i>' +
+            //             '<span id="tik">' + dd + '</span>' + '</li></ul>');
+
+            edit_item.find('.edit_list').append(add_edit_value);
+            edit_item.find('.edit_list').attr("data-value",add_edit_value);
+            //$('.square').append(edit_item);
+            $(this).parent().parent().html(edit_item);
+            saveTodo();
+        })
+
+
+//-----------------------------------------------------------------------------------------------
+
+        //수정 엔터키 설정, 동적으로 생겨난 태그에 관한 것이므로  $(document).on 사용
+        $(document).on('keypress', '.edit', function(e){
+            if (e.which == 13) {
+                $(".todo_edit").click();
+            }
+        });*/
+     });
+     
+    </script>
+</body>
+
+</html>
