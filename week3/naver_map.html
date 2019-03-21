@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #naver_map{
+            margin: 0 auto;
+            top: 4em;
+        }
+
+        .mdl-dialog{
+            left: 100em;
+            top: 11em;
+            width: 18%!important;
+
+        }
+
+        .mdl-dialog__content{
+            
+            padding: unset!important;
+
+
+        }
+
+        .btn_x{
+            min-width: unset!important;
+            width: 3em;
+            border: 1px;
+        }
+
+        .demo-card-square.mdl-card {
+            width: 320px;
+            height: 320px;
+        }
+        .demo-card-square > .mdl-card__title {
+            color: #fff;
+            background:
+            url('https://getmdl.io/assets/demos/dog.png') bottom right 15% no-repeat #46B6AC;
+        }
+
+        #form_title{
+            height: 100%;
+        }
+
+        .title_lo{
+            top: 70%;
+
+        }
+
+        .mdl-textfield{
+            padding: 25px 0!important;
+
+        }
+
+        .add_clo{
+            
+            margin-left: 75%;
+        }
+
+        .mdl-card__actions{
+            width: 47%!important;
+        }
+
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=4u2f4t2aqz&submodules=geocoder"></script>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">맛집을 찾아서</span>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Title</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            
+            <div class="page-content">
+                <div id="naver_map" style="width:50%;height:300px;"></div>
+                <button id="search_address">주소검색</button>
+            </div>
+     
+    
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+        storage_key = "taste_road";
+       
+
+        function saveTodo () {
+            var data = {};
+                var taste = $('.review_write');
+                taste.each(function(index) {
+                data[index] = [$(this).prev().text(), $(this).val()];
+            });
+               // console.log(data);
+                localStorage.setItem(storage_key, JSON.stringify(data));
+        }
+
+        function loadTodo () {
+            var taste = localStorage.getItem(storage_key);
+            taste = JSON.parse(taste);
+            
+            for(var key in taste) {
+                var value = taste[key][0];
+                var complete = taste[key][1];
+                $('.review_write').val(complete);
+                //console.log(complete);
+                marker = new naver.maps.Marker({
+                        position: new naver.maps.LatLng(value),
+                        map: naver_map
+                });
+            }
+        };
+
+        // 지도 옵션 적용하기
+        var option = {
+            center: new naver.maps.LatLng(37.5487382,127.0534817),
+            zoom: 14,
+            scaleControl: true,
+            logoControl: true,
+            mapDataControl: true,
+            mapTypeControl: true,
+            zoomControl: true,
+            zoomControlOptions: {
+                position: naver.maps.Position.RIGHT_CENTER
+            },
+        };
+
+        //다이얼로그 호출
+        // function test () {
+        //     $('#write_review_dialog')[0].showModal();
+        //     console.log(point);
+        // }
+
+        // 지도 생성하기
+        naver_map = new naver.maps.Map($('#naver_map')[0], option);
+        loadTodo ();
+        //console.log(value);
+        //loadReview(naver_map);  //로드하기
+        // 주소 검색 버튼 클릭시 다음 우편번호 api 이용하기
+
+       
+
+        $('#search_address').click(function() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    var addr = ''; // 주소 변수
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+                    //console.log(addr);
+
+                    naver.maps.Service.geocode({
+                        //naver map geocode의 address 값을 
+                        address: addr
+                    }, function(status, response) {
+                        if (status === naver.maps.Service.Status.ERROR) {
+                            return alert('Something Wrong!');
+                        }
+                        var item = response.result.items[0],
+                        //point 변수에 좌표 값을 저장, marker에 position(찍히는 곳)을 위도,경도 값이 저장된  point로 설정
+                        
+
+                        point = new naver.maps.Point(item.point.x, item.point.y),marker = new naver.maps.Marker({
+                        position: new naver.maps.LatLng(point),
+                        map: naver_map
+                    });
+
+                    //console.log(point);
+
+                    var contentString = [
+                            '<div class="iw_inner">',
+                                '<h4 class="adr">'+point+'</h4>',
+                                '<input type="text" class="review_write">',
+                                //'<input type="submit" value="리뷰작성" class="reviewgo">',
+                                ' <button class="review_go">리뷰작성</button>',
+                                //' <button class="load_go">dff</button>',
+                            '</div>'
+                        ].join('');
+
+                    
+                   
+
+                    var infowindow = new naver.maps.InfoWindow({
+                        content: contentString
+                    });
+
+                  //  storage_key = "taste_road";
+
+                    naver.maps.Event.addListener(marker, "click", function(e) {
+                        if (infowindow.getMap()) {
+                            infowindow.close();
+                        } else {
+                            infowindow.open(naver_map, marker);
+                            loadTodo();
+                            $('.review_go').click(function(){
+                                saveTodo();
+                            });
+                        }
+                    });
+
+                    //console.log(item.point.x, item.point.y);
+                    //naver.maps.Event.addListener(marker, 'click', test);
+                        naver_map.setCenter(point);
+                        
+                    });
+                }
+            }).open();
+        });
+           
+    });    
+   
+    </script>
+
+</body>
+</html>
