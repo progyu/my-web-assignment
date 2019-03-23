@@ -157,6 +157,15 @@
         .favor {
             width: 100px;
         }
+
+        .accordion {
+            display:inline-block;
+            width:500px;
+        }
+        .card-header {
+            padding: 0;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -389,8 +398,66 @@
                     <button class="favor">즐겨찾기</button>
                 </div>
             </div>
-            
-                
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        최저가로 구입하실 수 있도록 시뮬레이션 해 보실 수 있습니다.
+                      </button>
+                    </h2>
+                  </div>
+              
+                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body" style="padding:0;">
+                        <table border="1" style="width:500px;">
+                            <tr>
+                                <td>회원 등급 할인 : 회원가입 후 혜택을 받으실 수 있습니다. 
+                                    <a href="#">회원혜택</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    적립금 선할인 :
+                                    <input type="checkbox" aria-label="Checkbox for following text input">
+                                    사용 1,670원 <a href="#">할인제도</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    보유 쿠폰 사용 :
+                                    <input type="checkbox" aria-label="Checkbox for following text input">
+                                    사용가능한 쿠폰 없음
+                                    <a href="#">쿠폰내역</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    보유 적립금 사용 :
+                                    <input type="checkbox" aria-label="Checkbox for following text input">
+                                    사용
+                                    <a href="#">적립금 내역</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          Gift 사은품 지급 (2)
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                      <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 w
+                    </div>
+                  </div>
+            </div>
+        </div>
 
 
 
@@ -410,6 +477,7 @@
 
 <!-- wrapper     -->
     </div> 
+    <div style="height:500px;"></div>
     <script>
         $('#s1_img').click(function(e){
             e.preventDefault();
