@@ -21,7 +21,7 @@
         }
         .social_url {
             display: inline-block;
-            border-right: 1px solid gray;
+            /* border-right: 1px solid gray; */
             padding-right: 15px;
         }
         .btn-group {
@@ -41,17 +41,17 @@
             width: 500px;
             height: 660px;
             display: inline-block;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
         .rimited_txt {
-            border: 1px solid blue;
+            /* border: 1px solid blue; */
             /* float: right; */
             vertical-align: top;
         }
 
         .product_info {
-            border: 1px solid black;
+            /* border: 1px solid black; */
             width: 1060px;
             height: 700px;
         }
@@ -63,12 +63,12 @@
         }
 
         .hashtag {
-            border: 1px solid gray;
+            /* border: 1px solid gray; */
             padding: 5px;
         }
 
         .wrapper {
-            border: 1px solid green;
+            /* border: 1px solid green; */
         }
         /* .small_photo {
             
@@ -76,7 +76,7 @@
         .bottom_left {
             width: 500px;
             display: inline-block;
-            border: 1px solid fuchsia;
+            /* border: 1px solid fuchsia; */
         }
 
         .detail_info {
@@ -92,7 +92,7 @@
         }
 
         .bottom_info {
-            border: 1px solid orange;
+            /* border: 1px solid orange; */
             width: 1060px;
         }
         
@@ -127,35 +127,58 @@
         }
 
         .para {
-            border-bottom: 1px solid gray;
+            /* border-bottom: 1px solid gray; */
             padding: 10px;
         }
         
-        .icon_like {
+        div.buy {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        div.shopping {
+            display: inline-block;
+            margin-right: 10px;
+            width: 333px;
+        }
+
+        div.like {
+            display: inline-block;
+            height: 50px;
+            vertical-align: top;
+        }
+
+        a.icon_like {
             border: 1px solid gray;
-            padding: 10px;
+            padding: 16px;
+            /* height: 80px; */
+            font-size: 20px;
+           
         }
 
-        .d_buy {
-            font-size: 24px;
+        button.d_buy {
+            /* font-size: 24px; */
+            height: 60px;
+            width: 170px;
+            font-size: 20px;
+            margin-right: 13px;
         }
 
-        .shopping {
-            display: inline-block;
-            vertical-align: middle;
-        }
 
-        .like {
-            display: inline-block;
-        }
-
-        .alarm {
+        button.alarm {
             display: block;
-            width: 100px;
+            height: 25px;
+            font-size: 10px;
+            width: 150px;
+            margin-bottom: 8px;
+            /* width: 100px; */
         }
 
-        .favor {
-            width: 100px;
+        button.favor {
+            /* width: 100px; */
+            height: 25px;
+            font-size: 10px;
+            width: 150px;
         }
 
         .accordion {
@@ -165,6 +188,27 @@
         .card-header {
             padding: 0;
             font-size: 12px;
+        }
+
+        p.gift {
+            margin: 0.5rem;
+        }
+
+        div.look_book,div.socks {
+            display: inline-block;
+        }
+
+        div.socks {
+            vertical-align: top;
+        }
+
+        div.card-body {
+            padding: 0;
+        }
+
+        td {
+            padding:0;
+            text-align: left;
         }
     </style>
 </head>
@@ -387,11 +431,11 @@
             </div>
 
             </div>
-            <div>
+            <div class="buy">
                 <div class="shopping">
                     <button class="d_buy">바로 구매</button>
                     <a href="#" class="icon_like"><img src="/images/shopping_cart.png"></a>
-                    <a href="#" class="icon_like"><img src="/images/heart-outline.png"></a>
+                    <a href="#" class="icon_like"><img src="/images/like.png"></a>
                 </div>
                 <div class="like">
                     <button class="alarm">재입고알림</button>
@@ -453,7 +497,19 @@
                     </div>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                       <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 w
+                          <div class="look_book">
+                            <a href="#"><img src="/images/lookbook.jpg"></a>
+                            <p class="gift">무신사 vol.72</p>
+                            <p class="gift">남은수량 : 무제한</p>
+                            <p class="gift">특정 상품 20000원 <br>
+                                이상 구매 시 
+                            </p>
+                          </div>
+                          <div class="socks">
+                            <a href="#"><img src="/images/socks.jpg"></a>
+                            <P class="gift">남은 수량 : 0개</P>
+                            <P class="gift">특정 상품 구매 시</P>
+                          </div>
                     </div>
                   </div>
             </div>
