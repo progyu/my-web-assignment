@@ -11,6 +11,7 @@
     <style>
         a, a:hover, a:visited {
             text-decoration: none;
+            color: #999;
         }
 
         .product_name {
@@ -37,11 +38,11 @@
             border: 1px solid grey;
         } */
 
-        .slide {
+        div.slide {
             width: 500px;
             height: 660px;
             display: inline-block;
-            /* border: 1px solid red; */
+            border: 1px solid #ddd;
         }
 
         .rimited_txt {
@@ -52,7 +53,7 @@
 
         .product_info {
             /* border: 1px solid black; */
-            width: 1060px;
+            width: 1100px;
             height: 700px;
         }
 
@@ -60,19 +61,20 @@
             /* float:right; */
             display: inline-block;
             vertical-align: top;
+            margin-left: 40px;
         }
 
         .hashtag {
-            border: 1px solid gray;
+            border: 1px solid #ddd;
             padding: 5px;
         }
 
-        .wrapper {
-            /* border: 1px solid green; */
+        div.wrapper {
+            border: 1px solid #ddd;
+            border-right: none;
+            margin-left: 20px;
         }
-        /* .small_photo {
-            
-        } */
+       
         .bottom_left {
             width: 500px;
             display: inline-block;
@@ -81,6 +83,21 @@
 
         .detail_info {
             padding-left: 0;
+        }
+
+        div.product_info_sub {
+            border-top: 1px solid #ddd;
+            padding-top:10px;
+            padding-bottom: 20px;
+        }
+
+        div.small_photo {
+            padding-bottom: 20px;
+        }
+
+        div.guide {
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
         }
 
         /* .guide_table {
@@ -93,20 +110,24 @@
 
         .bottom_info {
             /* border: 1px solid orange; */
-            width: 1060px;
+            width: 1100px;
         }
         
-        .select_option {
+        div.select_option {
             display: inline-block;
             /* float: right; */
             /* margin-right: 20%; */
             vertical-align: top;
-        }
-        
-        .color {
-            background-color: antiquewhite;
+            margin-left: 40px;
         }
 
+        div.select_option > div {
+            border-bottom: 1px solid #ddd;
+            padding-top:5px;
+            padding-bottom:5px;
+        }
+        
+        
         ul,li {
             list-style: none;
         }
@@ -120,14 +141,14 @@
             text-align: center;
         }
 
-        .scroll_box {
+        div.scroll_box {
             width: 500px;
             height: 200px;
             overflow:scroll;
         }
 
         .para {
-            /* border-bottom: 1px solid gray; */
+            border-bottom: 1px solid #ddd;
             padding: 10px;
         }
         
@@ -139,7 +160,7 @@
         div.shopping {
             display: inline-block;
             margin-right: 10px;
-            width: 333px;
+            width: 353px;
         }
 
         div.like {
@@ -148,8 +169,13 @@
             vertical-align: top;
         }
 
+        div.post_info, div.price_info {
+            border-top: 1px solid #ddd;
+            padding-top:10px;
+        }
+
         a.icon_like {
-            border: 1px solid gray;
+            border: 1px solid #ddd;
             padding: 16px;
             /* height: 80px; */
             font-size: 20px;
@@ -159,9 +185,13 @@
         button.d_buy {
             /* font-size: 24px; */
             height: 60px;
-            width: 170px;
+            width: 180px;
             font-size: 20px;
             margin-right: 13px;
+            background-color: black;
+            color: white;
+            outline: none;
+            border: none;
         }
 
 
@@ -169,8 +199,10 @@
             display: block;
             height: 25px;
             font-size: 10px;
-            width: 150px;
+            width: 172px;
             margin-bottom: 8px;
+            background-color: white;
+            border: 1px solid #ddd;
             /* width: 100px; */
         }
 
@@ -178,12 +210,14 @@
             /* width: 100px; */
             height: 25px;
             font-size: 10px;
-            width: 150px;
+            width: 172px;
+            background-color: white;
+            border: 1px solid #ddd;
         }
 
         .accordion {
             display:inline-block;
-            width:500px;
+            width:542px;
         }
         .card-header {
             padding: 0;
@@ -208,8 +242,84 @@
 
         td {
             padding:0;
+        }
+
+        div.padding_wrapper {
+            padding: 30px;
+        }
+
+        div.opt {
+            border-top:1px solid #ddd;
+            margin-top: 50px;
+        }
+
+        div.scroll_box, div.size_reco, div.buy, div.accordion {
+            border: none !important; 
+        }
+
+        div.border_color {
+            border: 1px solid #ddd;
+            padding: 20px;
+            background-color: #f3f3f3;
+        }
+
+        .table_color {
+            background-color: #f3f3f3;
+        }
+
+        .pre_sale {
             text-align: left;
         }
+
+        div.size_option {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        div.size_reco {
+            margin-top: 10px;
+        }
+
+        .size_choose {
+            width: 260px;
+        }
+
+        .btn-danger, .btn-danger:hover, .btn-danger:active, .btn-danger:focus, .btn-danger.active {
+            background-color: white;
+            color: black;
+            border: 1px solid #ddd;
+            box-shadow: none;
+            margin-bottom: 5px;
+        }
+
+        .url_submit {
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+
+        .remited_sals {
+            background-color: white;
+            border: 1px solid #cc66cc;
+            color: #cc66cc;
+        }
+
+        .btn-link, .btn-link:hover, .btn-link:focus {
+            text-decoration: none;
+            color: black;
+        }
+
+        span.free_shipping {
+            border: 1px solid #f00;
+            color: #f00;
+            padding: 5px;
+        }
+
+        a.special {
+            border: 1px solid black;
+            color: black;
+            padding: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -217,6 +327,7 @@
         <header class="adidas_img">
             <img src="/images/adidas_logo.PNG">
         </header>
+        <div class="padding_wrapper">
         <div class="product_title">
             <button class="remited_sals">한정 판매</button>
             <p class="product_name">[EF2673]영 원 - (빈티지)트리플블랙/BEAMS</p>
@@ -276,12 +387,12 @@
               <div class="product_info_sub">
                 <span>Product info</span> <span>제품정보</span>
                 <ul>
-                    <li>브랜드 / 품번  ADIDAS / EF2673</li>
-                    <li>시즌 / 성별 2019 S/S / 남</li>
-                    <li>인기도(1개월) 40,540(조회수)/902(장바구니+관심상품)</li>
-                    <li>302 개(결제완료-반품)</li>
-                    <li>269</li>
-                    <li>98.66% 만족</li>
+                    <li>- 브랜드 / 품번  ADIDAS / EF2673</li>
+                    <li>- 시즌 / 성별 2019 S/S / 남</li>
+                    <li>- 인기도(1개월) 40,540(조회수)/902(장바구니+관심상품)</li>
+                    <li>- 누적판매 302 개(결제완료-반품)</li>
+                    <li>- 좋아요 269</li>
+                    <li>- 구매 후기 98.66% 만족</li>
                 </ul>
                 <a href="#" class="hashtag">#어글리</a>
                 <a href="#" class="hashtag">#어글리신발</a>
@@ -295,26 +406,26 @@
               <div class="post_info">
                   <span>Delivery Info배송정보</span>
                   <ul>
-                      <li>배송 방법 국내 배송 / 무신사 직배송</li>
-                      <li>평균 배송일 2일 / CJ대한통운 (영업일 기준, 결제 후 평균 배송<br>기간)</li>
+                      <li>- 배송 방법 국내 배송 / 무신사 직배송</li>
+                      <li>- 평균 배송일 2일 / CJ대한통운 (영업일 기준, 결제 후 평균 배송<br>기간)</li>
                   </ul>
               </div>
               <div class="price_info">
                   <span>Price Info가격정보</span>
                   <ul>
-                      <li>무신사 판매가 169,000	원</li>
-                      <li>무신사 회원가 153,790 ~ 165,620 원 ▼
+                      <li>- 무신사 판매가 169,000	원</li>
+                      <li>- 무신사 회원가 153,790 ~ 165,620 원 ▼
                           <ul>
                               <li>ㄴ 바로접속 ON 혜택 : 적립금 선할인, 등급 할인 등 회원가 적용</li>
                               <li>ㄴ 쿠폰 사용이 허용된 상품입니다. [보유 쿠폰을 확인] 하세요.</li>
                           </ul>
                       </li>
-                      <li>무신사 판매가 169,000	원</li>
-                      <li>무이자 할부가 25,632 ~ 28,167원/월 (6개월 할부)</li>
-                      <li>무신사 적립금 최대 6,760원 (바로접속 ON, 로그인 필요)</li>
+                      <li>- 무신사 판매가 169,000	원</li>
+                      <li>- 무이자 할부가 25,632 ~ 28,167원/월 (6개월 할부)</li>
+                      <li>- 무신사 적립금 최대 6,760원 (바로접속 ON, 로그인 필요)</li>
                   </ul>
-                  <span>무신사 스토어는 전 상품 무료배송입니다.</span>
-                  <a href="#">회원 특별 혜택</a>
+                  <span class="free_shipping">무신사 스토어는 전 상품 무료배송입니다.</span>
+                  <a href="#" class="special">회원 특별 혜택</a>
               </div>
         </div>
     </div>
@@ -344,7 +455,7 @@
             <table border="1px" class="guide_table">
                 <thead>
                     <tr>
-                        <th>쿠션</th>
+                        <th class="table_color">쿠션</th>
                         <th>없음</th>
                         <th>보통</th>
                         <th>있음</th>
@@ -352,13 +463,13 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>무게</td>
+                        <td class="table_color">무게</td>
                         <td>가벼움</td>
                         <td>보통</td>
                         <td>무거움</td>
                     </tr>
                     <tr>
-                        <td>굽 높이</td>
+                        <td class="table_color">굽 높이</td>
                         <td>낮음</td>
                         <td>보통</td>
                         <td>높음</td>
@@ -368,9 +479,10 @@
         </div>
     </div>
          <div class="select_option">
-            <div>
+            <div class="opt">
                 <span>Select Option</span><span>옵션선택</span>
             </div>
+            <div class="border_color">
             <div class="color">
                 <span>컬러</span>
                 <a href="#"><img src="/images/color1.jpg"></a>
@@ -384,15 +496,17 @@
             <div class="size_option">
                 <span>옵션</span>
                 <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Dropdown link
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
+                      <select class="size_choose">
+                            <option value="choose">선택하세요</option>
+                            <option value="220">220</option>
+                            <option value="230">230</option>
+                            <option value="240">240</option>
+                            <option value="250">250</option>
+                            <option value="260">260</option>
+                            <option value="270">270</option>
+                            <option value="280">280</option>
+                      </select>
+                    </div> 
             </div>
             <div>
                 <span>수량</span>
@@ -429,6 +543,7 @@
               </div>
 
             </div>
+        </div>
 
             </div>
             <div class="buy">
@@ -454,21 +569,21 @@
               
                   <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body" style="padding:0;">
-                        <table border="1" style="width:500px;">
+                        <table border="1" style="width:542px;" class="pre_sale">
                             <tr>
-                                <td>회원 등급 할인 : 회원가입 후 혜택을 받으실 수 있습니다. 
+                                <td class="pre_sale">회원 등급 할인 : 회원가입 후 혜택을 받으실 수 있습니다. 
                                     <a href="#">회원혜택</a>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="pre_sale">
                                     적립금 선할인 :
                                     <input type="checkbox" aria-label="Checkbox for following text input">
                                     사용 1,670원 <a href="#">할인제도</a>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="pre_sale">
                                     보유 쿠폰 사용 :
                                     <input type="checkbox" aria-label="Checkbox for following text input">
                                     사용가능한 쿠폰 없음
@@ -476,7 +591,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="pre_sale">
                                     보유 적립금 사용 :
                                     <input type="checkbox" aria-label="Checkbox for following text input">
                                     사용
@@ -519,7 +634,7 @@
 
 
 
-
+        
 
             <!-- select_option -->
          </div>
@@ -529,8 +644,8 @@
     </div>
 
 
-
-
+  <!--padding wrapper-->
+  </div>
 <!-- wrapper     -->
     </div> 
     <div style="height:500px;"></div>
