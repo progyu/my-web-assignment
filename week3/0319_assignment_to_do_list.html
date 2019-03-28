@@ -209,12 +209,12 @@
         var list_item = '<ul><li class="to_do_list"><span class="mdl-list__item-primary-content"><i id="list_del" class="material-icons md-dark icon">delete_forever</i></span>' +
                         '<span id="tik">' + dd + '</span>' + '</li></ul>';
 
-        var edit_item = '<ul class="edit_ul"><li class="edit_list"><i id="list_del" class="material-icons md-dark icon">delete_forever</i>' +
-                        '<span id="tik">' + dd + '</span>' + '</li></ul>'
+        // var edit_item = '<ul class="edit_ul"><li class="edit_list"><i id="list_del" class="material-icons md-dark icon">delete_forever</i>' +
+        //                 '<span id="tik">' + dd + '</span>' + '</li></ul>'
 
-        var edit_input = '<input id="input_todo" class="mdl-textfield__input" type="text" name="todo" autocomplete="off">'+
-        '<button id = "go" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored sub_go">'+
-        '<i class = "material-icons">add</i>'+'</button>'
+        // var edit_input = '<input id="input_todo" class="mdl-textfield__input" type="text" name="todo" autocomplete="off">'+
+        // '<button id = "go" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored sub_go">'+
+        // '<i class = "material-icons">add</i>'+'</button>'
       
 
 
@@ -257,7 +257,7 @@
         loadTodo();
         //플러스 버튼을 클릭했을 때 이벤트------------------------------------------------------
        // $(document).ready(function () {
-            $('.sub_go').click(function (e) {
+            $('#go').click(function (e) {
                 e.preventDefault();
         //입력한 내용이 없으면 경고창을 띄움------------------------------------------------------
                 if ($('input[name="todo"]').val() == '') {
